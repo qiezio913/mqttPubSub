@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import paho.mqtt.publish as publish
+import json
 
 print("MQTT Client is Running.")
 while True:
-    msg = input("Input Something")
-    if msg == 'exit':
+    temp = input("Input Temperature: ")
+    humi = input("Input Humidity: ")
+    if temp == 'exit':
         break
-    publish.single("/little/qiezi", msg, hostname="39.97.112.200")
+    data = {"temp": int(temp), "humi": int(humi)}
+    send_data = json.dumps(data)
+    publish.single("/little/qiezi", send_data, hostname="39.97.112.200")
